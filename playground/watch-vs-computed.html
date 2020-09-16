@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p>{{ num }}</p>
+        <p>{{ doubleNum }}</p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                num: 10
+            },
+            // validation에 자주 쓰임
+            // 값을 리턴함
+            // 단순하고 가벼운 동작에 많이 쓰임
+            // watch보다 캐싱등 로직이 잘되어있다. 왠만하면 이걸 써라
+            computed: {
+                doubleNum: function() {
+                    return this.num * 2;
+                }
+            },
+            //이전(old)과 현재(new) 값을 받을수 있음.
+            // 무거운 동작(메서트 요청)등에 어울림.
+            // 되도록 computed를 쓸것...
+            watch: {
+                num: function(newValue, oldValue){
+                    this.fetchUserByNumber(newValue);
+                }
+            },
+            methods: {
+                fetchUserByNumber: function(num){
+                    console.log(num);
+                    axios.get(num);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
